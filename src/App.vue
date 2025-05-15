@@ -4,12 +4,20 @@ import AuthorizationForm from './components/AuthorizationForm.vue'
 </script>
 
 <template>
-
-<AuthorizationForm/>
-
+  <div class="main-bg">
+    <AuthorizationForm/>
+  </div>
 </template>
 
-<style scoped>
+<style>
+.main-bg {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;
