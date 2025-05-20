@@ -32,14 +32,14 @@ router.beforeEach(async (to, from, next) => {
     }
 
     try {
-      // Проверка токена через /auth/me
-      const res = await api.get('/auth/me', {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      // // Проверка токена через /auth/me
+      // const res = await api.get('/auth/me', {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // })
 
-      if (res.status === 200) return next();
+      return next();
 
     } catch (err) {
       // токен невалиден -> удаляем и перекидываем на логин

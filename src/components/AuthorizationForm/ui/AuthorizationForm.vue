@@ -1,14 +1,17 @@
 <script>
 import '../style.scss'
 import { signInAsync } from '../api/signInApi.js'
+import { signUpAsync } from '../api/signUpApi'
 
 export default {
   data() {
     return {
       login: '',
       pass: '',
+      email: '',
       remember: false,
       showRegister: false,
+      state: '',
     }
   },
   methods: {
@@ -28,6 +31,7 @@ export default {
     toggleRegister() {
       this.showRegister = !this.showRegister
     },
+    /* Метод для авторизации пользователя */
     async signIn() {
       /*
         Проверяем, что this.login и this.pass - не null и не пустые.
@@ -56,6 +60,33 @@ export default {
         this.$router.push('/')
       } catch (e) {
         throw new Error('Exception', e)
+      }
+    },
+    /* Метод для регистрации пользователя */
+    async signUp() {
+      if (!this.login || !this.pass || !this.email) {
+        console.error('Введите все поля')
+        return
+      }
+
+      try {
+        const config = {
+          endpoint: '/auth/signUp',
+          data: {
+            userLogin: this.login,
+            userPassword: this.pass,
+            state: parseInt(this.state),
+            email: this.email,
+          },
+        }
+
+        await signUpAsync(config).then((res) => {
+          const token = res.data.access_token
+          localStorage.setItem('access_token', token)
+        })
+        this.$router.push('/')
+      } catch (e) {
+        console.error(e)
       }
     },
   },
@@ -92,12 +123,14 @@ export default {
 
       <template v-else>
         <label class="input-label">ЛОГИН</label>
-        <input class="input-field" type="text" placeholder="" />
+        <input class="input-field" v-model="login" type="text" placeholder="" />
         <label class="input-label">E-MAIL</label>
-        <input class="input-field" type="email" placeholder="" />
+        <input class="input-field" v-model="email" type="email" placeholder="" />
         <label class="input-label">ПАРОЛЬ</label>
-        <input class="input-field" type="password" placeholder="" />
-        <button class="register-btn" type="button">Зарегистрироваться</button>
+        <input class="input-field" v-model="pass" type="password" placeholder="" />
+        <label class="input-label">Статус</label>
+        <input class="input-field" v-model="state" type="text" placeholder="" />
+        <button @click="signUp" class="register-btn" type="button">Зарегистрироваться</button>
       </template>
     </form>
   </div>
