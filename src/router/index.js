@@ -33,11 +33,11 @@ router.beforeEach(async (to, from, next) => {
 
     try {
       // // Проверка токена через /auth/me
-      // const res = await api.get('/auth/me', {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // })
+      const res = await api.get('/auth/me', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
 
       return next();
 
