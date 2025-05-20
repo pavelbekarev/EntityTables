@@ -1,11 +1,11 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
-import AuthorizationForm from './components/AuthorizationForm.vue'
+import AuthorizationForm from './components/AuthorizationForm/ui/AuthorizationForm.vue'
 </script>
 
 <template>
   <div class="main-bg">
-    <AuthorizationForm/>
+    <router-view />
   </div>
 </template>
 
